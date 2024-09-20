@@ -60,7 +60,8 @@ const Footer = () => {
               <h1 className="font-bold text-lg">More</h1>
               <h3 className="text-sm">Agents</h3>
               <h3 className="text-sm">Affordable Houses</h3>
-              <h3 className="text-sm">FAQ's</h3>
+              <h3 className="text-sm">FAQ&apos;s</h3>
+            
             </div>
             <div className="text-white flex flex-col gap-2">
               <h1 className="font-bold text-lg">Popular Search</h1>
