@@ -9,3 +9,24 @@
 body{
       font-family: "Outfit", sans-serif;
 }
+
+.hero{
+  background-image: url("/Frame 9325 (1).svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 50vh;
+  
+  
+
+}
+
+
+
+
+@media (min-width: 1024px){
+  .hero{
+    min-height: 446px;
+    max-height: 448px;
+  }
+}
