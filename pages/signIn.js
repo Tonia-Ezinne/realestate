@@ -1,203 +1,156 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 import Image from "next/image";
-import Link from "next/link";
+import { signIn as nextAuthSignIn } from "next-auth/react"; // Rename import
 
-const SignIn = () => {
+export default function signIn() {
+  // Rename the component
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  // Load email from local storage if it exists
-  useEffect(() => {
-    const storedEmail = localStorage.getItem("rememberedEmail");
-    if (storedEmail) {
-      setEmail(storedEmail);
-      setRememberMe(true);
-    }
-  }, []);
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Reset error message
-    setLoading(true); // Set loading state
+    setError("");
+    setMessage("");
+    setLoading(true);
 
-    // Simulate form submission (replace with actual authentication logic)
+    if (!email || !password) {
+      setError("All fields are required");
+      setLoading(false);
+      return;
+    }
+
     try {
-      // Replace this with your authentication API call
-      await new Promise((resolve, reject) => {
-        setTimeout(() => {
-          if (email === "test@example.com" && password === "password") {
-            resolve(); // Simulate successful sign-in
-          } else {
-            reject("Invalid email or password."); // Simulate error
-          }
-        }, 2000);
-      });
+      const { data } = await axios.post("/api/auth", { email, password });
 
-      // Save email to local storage if "Remember Me" is checked
-      if (rememberMe) {
-        localStorage.setItem("rememberedEmail", email);
+      if (isChecked) {
+        localStorage.setItem("token", data.token);
       } else {
-        localStorage.removeItem("rememberedEmail");
+        sessionStorage.setItem("token", data.token);
       }
+
+      setMessage("Login successful");
+      setLoading(false);
+      router.push("/");
     } catch (err) {
-      setError(err); // Set error message
-    } finally {
-      setLoading(false); // Reset loading state
+      setError(err.response?.data?.error || "Login failed");
+      setLoading(false);
+      console.error(
+        "Login error:",
+        err.response ? err.response.data : err.message
+      );
     }
   };
 
-  const handleForgotPassword = () => {
-    alert("Redirecting to password reset...");
-  };
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen lg:p-0 p-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <form
-          onSubmit={handleSubmit}
-          className="p-6 md:p-10 md:px-8 lg:px-20 bg-white rounded-lg"
-        >
-          <div className="mt-10">
-            <h1 className="text-[#181A20] font-semibold leading-6 text-2xl">
-              Welcome Back to BetaHouse!
-            </h1>
-            <p className="text-[#181A20] text-xl font-normal mt-5">
-              Let’s get started by filling out the information below
-            </p>
+    <div className="flex items-center">
+      <div className="lg:w-6/12 container">
+        <div className="lg:hidden flex justify-center mt-14 items-center gap-2">
+          <div className="w-[35px] h-[35px] flex justify-center items-center rounded-full bg-[#4BA586]">
+            <Image src="/bh.svg" width={25} height={25} alt="logo" />
           </div>
+          <h1 className="text-[22px] font-bold">BetaHouse</h1>
+        </div>
 
-          <div className="input-group mt-10 mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="mt-1 block w-full h-10 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-            />
-          </div>
-
-          <div className="input-group mb-4">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="mt-1 block w-full h-10 px-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-            />
-          </div>
-
-          {error && <div className="mb-4 text-red-600 text-sm">{error}</div>}
-
-          <div className="flex items-center mb-4">
-            <input
-              type="checkbox"
-              id="terms"
-              name="terms"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-              className="hidden"
-            />
-            <label
-              htmlFor="terms"
-              className="flex items-center cursor-pointer text-sm text-gray-700"
-            >
-              <span className="w-5 h-5 flex items-center justify-center border border-gray-300 rounded-md bg-white mr-2">
-                {rememberMe && (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="12"
-                    height="12"
-                    fill="currentColor"
-                    className="text-white"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M13.485 1.343a1 1 0 0 1 1.414 1.414l-9 9a1 1 0 0 1-1.415 0l-4-4a1 1 0 0 1 1.414-1.414L5 10.586l8.485-8.243z"
-                    />
-                  </svg>
-                )}
-              </span>
-              Remember me
-            </label>
-            <button
-              type="button"
-              onClick={handleForgotPassword}
-              className="ml-auto text-sm text-[#EC5E5E] hover:underline"
-            >
-              Forgot Password?
-            </button>
-          </div>
-
-          <div className="text-center">
-            <button
-              type="submit"
-              disabled={loading}
-              className={`w-full py-5 mt-4 text-white text-lg rounded-xl ${
-                loading ? "bg-gray-400" : "bg-[#3D9970] hover:bg-blue-700"
-              } focus:outline-none focus:ring focus:ring-blue-500`}
-            >
-              {loading ? "Signing in..." : "Sign up"}
-            </button>
-          </div>
-
-          <p className="text-center text-[#4F4E4E] my-4">Or</p>
-
-          <div className="flex items-center justify-center">
-            <button className="flex items-center text-[#292929] text-lg justify-center w-full py-5 bg-white border border-black rounded-xl hover:bg-gray-100 focus:outline-none focus:ring focus:ring-blue-500">
-              <Image
-                src="/google.svg"
-                alt="Google Logo"
-                width={20}
-                height={20}
-                className="mr-2"
-              />
-              <span>Continue with Google</span>
-            </button>
-          </div>
-
-          <p className="text-center leading-loose tracking-wide mt-5 mb-4">
-            Already have an account?{" "}
-            <Link href="/signin">
-              <span className="text-[#3D9970] hover:underline hover:text-[#2C7A4D]">
-                Sign In
-              </span>
-            </Link>
+        <div className="w-10/12 px-[12px] mx-auto py-12">
+          <h1 className="font-bold text-[26px] text-center lg:text-left">
+            Welcome Back to BetaHouse!
+          </h1>
+          <p className="mt-5 lg:mt-0">
+            Let's get started by filling out the information below
           </p>
-        </form>
 
-        {/* Image Section */}
-        <div className="flex items-center justify-center">
-          <Image
-            src="/Frame img.svg"
-            alt="Description of the image"
-            width={300}
-            height={200}
-            className="w-full h-auto rounded-lg"
-          />
+          <form onSubmit={handleSubmit}>
+            {error && <p className="text-red-500 mt-4">{error}</p>}
+            {message && <p className="text-green-500 mt-4">{message}</p>}
+
+            <div className="flex flex-col gap-1 w-full mt-6">
+              <label className="font-semibold">Email</label>
+              <input
+                type="email"
+                className="border-[#DEDFE0] border-2 rounded p-3"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your Email"
+              />
+            </div>
+
+            <div className="flex flex-col gap-1 w-full mt-6">
+              <label className="font-semibold">Password</label>
+              <input
+                type="password"
+                className="border-[#DEDFE0] border-2 rounded p-3"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+              />
+            </div>
+
+            <div className="flex items-center gap-2 mt-4">
+              <input
+                type="checkbox"
+                className="bg-green-500"
+                checked={isChecked}
+                onChange={() => setIsChecked(!isChecked)}
+              />
+              <p className="font-semibold">Remember Me</p>
+            </div>
+
+            <div className="flex flex-col gap-3 mt-8">
+              <button
+                type="submit"
+                className={`bg-[#3D9970] text-white w-full py-3 rounded-lg ${
+                  loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+                disabled={loading}
+              >
+                {loading ? "Logging in..." : "Log In"}
+              </button>
+
+              <div className="flex gap-5">
+                <div className="bg-gradient-to-r from-[white] to-[black] h-[0.5px] w-6/12 mt-3"></div>
+                <p>or</p>
+                <div className="bg-gradient-to-r from-[black] to-[white] h-[0.5px] w-6/12 mt-3"></div>
+              </div>
+            </div>
+          </form>
+
+          <button
+            onClick={() => {
+              nextAuthSignIn("google").then(() => {
+                router.push("/");
+              });
+            }}
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-lg mt-4 border-[1px] border-black"
+            disabled={loading}
+          >
+            <Image src="/g.svg" width={20} height={20} alt="gmail icon" />
+            <p>Continue with Google</p>
+          </button>
+
+          <div className="flex gap-2 justify-center mt-8 items-center">
+            <p>New User?</p>
+            <a href="/signup" className="text-[#3D9970]">
+              Sign Up
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="hidden lg:block w-6/12 bg-[url('/sign.svg')] bg-cover bg-center h-[920px]">
+        <div className="flex items-center gap-2 mt-14 ml-10">
+          <div className="w-[35px] h-[35px] flex justify-center items-center rounded-full bg-[#4BA586]">
+            <Image src="/bh.svg" width={25} height={25} alt="logo" />
+          </div>
+          <h1 className="text-[22px] text-white font-bold">BetaHouse</h1>
         </div>
       </div>
     </div>
   );
-};
-
-export default SignIn;
+}

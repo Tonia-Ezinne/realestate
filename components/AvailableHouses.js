@@ -29,7 +29,7 @@ export default function AvailableHouses() {
   if (houses.length === 0) return <p>No houses available.</p>;
 
   return (
-    <div className="available-houses grid grid-cols-1 container mx-auto  w-11/12 md:grid-cols-3">
+    <div className="available-houses grid grid-cols-1 gap-5 mt-20 container mx-auto w-11/12  md:grid-cols-3">
       {houses.map((house) => (
         <div key={house._id} className="house-card">
           <div className="house-image">
@@ -38,7 +38,7 @@ export default function AvailableHouses() {
               alt={house.title}
               width={500} // Set appropriate width
               height={300} // Set appropriate height
-              className="w-[396.32px] h-[297.24px]"
+              className="w-full h-full"
             />
           </div>
           <div className="house-details  p-5">

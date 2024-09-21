@@ -1,16 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import DropDown from "@/components/DropDown"; // Ensure correct path and capitalization
+import DropDown from "@/components/DropDown";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsMenuOpen(false);
+        setIsDropdownOpen(false);
       }
     };
 
@@ -22,12 +24,13 @@ const Navbar = () => {
 
   const handleLinkClick = () => {
     setIsMenuOpen(false);
+    setIsDropdownOpen(false);
   };
 
   return (
     <div className="hero h-screen">
       <div className="sticky top-0 z-50 py-1 lg:py-2 shadow-lg" ref={menuRef}>
-        <nav className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4 lg:px-1">
+        <nav className="container mx-auto w-11/12 flex flex-col md:flex-row items-center justify-between px-4 lg:px-1">
           {/* Logo and Mobile Menu Button Section */}
           <div className="flex items-center justify-between w-full md:w-auto">
             <Link
@@ -109,16 +112,23 @@ const Navbar = () => {
           </div>
 
           {/* Profile Section */}
-          <div className="hidden md:block items-center ml-auto">
-            <div className="flex items-center">
+          <div className="hidden md:block items-center ml-auto relative">
+            <div
+              className="flex items-center cursor-pointer"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
               <Image
                 src="/Ellipse 8.svg"
                 width={50}
                 height={10}
                 alt="profile"
               />
-              <h1 className="text-white md:text-sm ml-2">Aisha Cucurella</h1>
+              <h1 className="text-white md:text-sm ml-2">Tonia-Ezinne</h1>
             </div>
+            <DropDown
+              isOpen={isDropdownOpen}
+              onClose={() => setIsDropdownOpen(false)}
+            />
           </div>
         </nav>
 
@@ -169,13 +179,12 @@ const Navbar = () => {
       </div>
 
       {/* Centered Text and Image */}
-      <div className="flex flex-col items-center text-center  mt-16">
+      <div className="flex flex-col items-center text-center mt-16">
         <h1 className="text-white text-6xl font-bold tracking-wide">
           Browse Our Properties
         </h1>
-
         <div className="w-6/12 p-2 mt-8">
-          <p className="text-white text-2xl  tracking-wide">
+          <p className="text-white text-2xl tracking-wide">
             Find your perfect home among our curated properties. Start browsing
             now!
           </p>
