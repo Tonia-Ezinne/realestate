@@ -15,12 +15,11 @@ export default async function handler(req, res) {
     }
 
     try {
-      // Log the login attempt for debugging
+      // Log the login attempt (sensitive info should not be logged in production)
       console.log("Login attempt:", { email });
 
       // Find the user in the database
       const user = await User.findOne({ email });
-      console.log("User found:", user);
 
       // Check if user exists
       if (!user) {
@@ -30,11 +29,9 @@ export default async function handler(req, res) {
 
       // Compare the password
       const isMatch = await bcrypt.compare(password, user.password);
-      console.log("Password from input:", password);
-      console.log("Password stored in DB:", user.password); // This should be hashed
 
       if (!isMatch) {
-        console.error(`Invalid password for user: ${email}`);
+        console.error(`Invalid password attempt for user: ${email}`);
         return res.status(401).json({ error: "Invalid credentials" });
       }
 

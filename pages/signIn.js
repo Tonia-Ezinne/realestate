@@ -2,10 +2,10 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { signIn as nextAuthSignIn } from "next-auth/react"; // Rename import
+import { signIn as nextAuthSignIn } from "next-auth/react";
+import Link from "next/link"; // Import Link
 
-export default function signIn() {
-  // Rename the component
+export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -63,7 +63,8 @@ export default function signIn() {
             Welcome Back to BetaHouse!
           </h1>
           <p className="mt-5 lg:mt-0">
-            Let's get started by filling out the information below
+            Let&apos;s get started by filling out the information below{" "}
+            {/* Escaped apostrophe */}
           </p>
 
           <form onSubmit={handleSubmit}>
@@ -136,9 +137,9 @@ export default function signIn() {
 
           <div className="flex gap-2 justify-center mt-8 items-center">
             <p>New User?</p>
-            <a href="/signup" className="text-[#3D9970]">
+            <Link href="/signup" className="text-[#3D9970]">
               Sign Up
-            </a>
+            </Link>
           </div>
         </div>
       </div>

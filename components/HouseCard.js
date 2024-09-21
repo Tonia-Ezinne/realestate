@@ -5,7 +5,7 @@ export default function HouseCard({ house }) {
     <div
       key={house._id}
       className="relative xl:px-3 lg:px-8 md: house-card rounded-lg "
-      style={{ width: "370px",  height: "415px" }} // Set the dimensions here
+      style={{ width: "370px", height: "415px" }} // Set the dimensions here
     >
       <div className="relative w-full h-full">
         <Image
@@ -42,12 +42,10 @@ export default function HouseCard({ house }) {
           {/* <p className="text-gray-200 mt-1"></p> */}
           <div className="flex items-center mt-2">
             <div className="mr-2">
-              <img src="/icon.svg" width="10" height="10" alt="Location Logo" />
+              <Image src="/icon.svg" width={10} height={10} alt="Location Logo" />
             </div>
             <div>
-              <p className="text-white text-sm leading-5">
-                {house.location}
-              </p>
+              <p className="text-white text-sm leading-5">{house.location}</p>
             </div>
           </div>
           {/* Uncomment the following if you want to display popular status */}
