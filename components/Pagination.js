@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   return (
     <div className="pagination mt-8 flex flex-col items-center">
@@ -8,7 +10,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           className="flex items-center justify-center px-4 py-2 border rounded bg-white transition duration-200 ease-in-out hover:bg-blue-400"
           disabled={currentPage === 1}
         >
-          <img
+          <Image
             src="/Vector (11).svg"
             width="10"
             height="10"
@@ -40,7 +42,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           className="flex items-center justify-center px-4 py-2 border rounded bg-white transition duration-200 ease-in-out hover:bg-blue-400"
           disabled={currentPage === totalPages}
         >
-          <img
+          <Image
             src="/Vector (10).svg"
             width="10"
             height="10"

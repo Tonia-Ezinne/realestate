@@ -79,7 +79,7 @@ export default function SignUp() {
           await.
         </h1>
         <p className="mt-5 text-center lg:text-left">
-          Let's get started by filling out the information below
+          Let&apos;s get started by filling out the information below
         </p>
 
         <form onSubmit={handleSubmit} className="w-full mt-6">
@@ -199,7 +199,6 @@ export default function SignUp() {
           alt="house"
           className="w-full h-full object-cover"
         />
-        
       </div>
     </div>
   );

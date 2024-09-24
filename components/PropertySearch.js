@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const PropertySearch = ({ handleSubmit }) => {
@@ -27,13 +28,14 @@ const PropertySearch = ({ handleSubmit }) => {
             <h1 className="font-semibold">BEDROOM</h1>
             <div className="flex items-center gap-5 mt-2 w-full justify-center">
               <button aria-label="Decrease" className="focus:outline-none">
-                <img src="/btn.svg" width="20" height="15" alt="Decrease" />
+                <Image src="/btn.svg" width={20} height={15} alt="Decrease" />
               </button>
               <button aria-label="Current Value" className="focus:outline-none">
-                <img src="/0.svg" width="20" height="10" alt="Current Value" />
+                <Image src="/0.svg" width={20} height={10} alt="Current Value" />
               </button>
               <button aria-label="Increase" className="focus:outline-none">
-                <img src="/bttn.svg" width="20" height="10" alt="Increase" />
+                
+                <Image src="/bttn.svg" width={20} height={10} alt="Increase"/>
               </button>
             </div>
           </div>
