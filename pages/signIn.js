@@ -53,7 +53,7 @@ export default function SignIn() {
       <div className="flex flex-col justify-center p-8 w-full lg:w-6/12">
         <div className="flex justify-center lg:hidden items-center gap-2">
           <div className="w-[35px] h-[35px] flex justify-center items-center rounded-full bg-[#4BA586]">
-            <Image src="/bh.svg" width={25} height={25} alt="logo" />
+            <Image src="/BH.svg" width={25} height={25} alt="logo" />
           </div>
           <h1 className="text-[22px] font-bold">BetaHouse</h1>
         </div>
