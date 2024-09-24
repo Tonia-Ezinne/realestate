@@ -154,8 +154,8 @@ export default function SignIn() {
       <div className="hidden lg:flex lg:w-6/12 justify-center items-center">
         <Image
           src="/13625 1.svg"
-          width={10}
-          height={10}
+          width="10"
+          height="10"
           alt="house"
           className="w-full h-full object-cover"
         />

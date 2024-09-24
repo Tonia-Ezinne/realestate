@@ -65,11 +65,11 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row h-screen">
+    <div className="flex flex-col lg:flex-row ">
       <div className="flex flex-col justify-center w-full lg:w-6/12 p-8">
         <div className="lg:hidden flex justify-center items-center gap-2 mb-6">
           <div className="w-[35px] h-[35px] flex justify-center items-center rounded-full bg-[#4BA586]">
-            <Image src="/bh.svg" width={25} height={25} alt="logo" />
+            <Image src="/BH.svg" width={25} height={25} alt="logo" />
           </div>
           <h1 className="text-[22px] font-bold">BetaHouse</h1>
         </div>
@@ -195,7 +195,7 @@ export default function SignUp() {
 
       <div className="hidden lg:flex lg:w-6/12 justify-center items-center">
         <Image
-          src="/13625 1.svg"
+          src="/13625 1.svg" width={10} height={10}
           alt="house"
           className="w-full h-full object-cover"
         />
