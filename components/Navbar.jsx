@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import DropDown from "@/components/DropDown";
+import PropertySearch from "@/components/PropertySearch";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,9 +29,12 @@ const Navbar = () => {
   };
 
   return (
-    <div className="hero h-screen">
-      <div className="sticky top-0 z-50 py-1 lg:py-2 shadow-lg" ref={menuRef}>
-        <nav className="container mx-auto w-11/12 flex flex-col md:flex-row items-center justify-between px-4 lg:px-1">
+    <div className="hero h-[1000px] relative">
+      <div
+        className="sticky w-11/12 container mx-auto top-0 z-50 py-1 lg:py-2 shadow-lg"
+        ref={menuRef}
+      >
+        <nav className=" flex flex-col md:flex-row items-center justify-between px-4 lg:px-1">
           {/* Logo and Mobile Menu Button Section */}
           <div className="flex items-center justify-between w-full md:w-auto">
             <Link
@@ -74,41 +78,18 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex flex-grow items-center justify-center space-x-4">
-            <Link
-              href="/"
-              className="py-4 px-2 text-white hover:text-[#5E3BEE] transition duration-300 font-semibold md:text-sm lg:text-lg"
-              onClick={handleLinkClick}
-            >
-              Home
-            </Link>
-            <Link
-              href="/joblisting"
-              className="py-4 px-2 text-white md:text-sm hover:text-[#5E3BEE] transition duration-300 font-semibold lg:text-lg"
-              onClick={handleLinkClick}
-            >
-              Properties
-            </Link>
-            <Link
-              href="/about-me"
-              className="py-4 px-2 text-white md:text-sm hover:text-[#5E3BEE] transition duration-300 font-semibold lg:text-lg"
-              onClick={handleLinkClick}
-            >
-              About Us
-            </Link>
-            <Link
-              href="/testimonials"
-              className="py-4 px-2 text-white md:text-sm hover:text-[#5E3BEE] transition duration-300 font-semibold lg:text-lg"
-              onClick={handleLinkClick}
-            >
-              Blog
-            </Link>
-            <Link
-              href="/contact"
-              className="py-4 px-2 text-white md:text-sm hover:text-[#5E3BEE] transition duration-300 font-semibold lg:text-lg"
-              onClick={handleLinkClick}
-            >
-              Contact Us
-            </Link>
+            {["Home", "Properties", "About Us", "Blog", "Contact Us"].map(
+              (item) => (
+                <Link
+                  key={item}
+                  href={`/${item.toLowerCase().replace(" ", "-")}`}
+                  className="py-4 px-2 text-white hover:text-[#5E3BEE] transition duration-300 font-semibold md:text-sm lg:text-lg"
+                  onClick={handleLinkClick}
+                >
+                  {item}
+                </Link>
+              )
+            )}
           </div>
 
           {/* Profile Section */}
@@ -120,7 +101,7 @@ const Navbar = () => {
               <Image
                 src="/Ellipse 8.svg"
                 width={50}
-                height={10}
+                height={50} // Adjusted for a better aspect ratio
                 alt="profile"
               />
               <h1 className="text-white md:text-sm ml-2">Tonia-Ezinne</h1>
@@ -138,57 +119,35 @@ const Navbar = () => {
             isMenuOpen ? "block" : "hidden"
           } py-2 shadow-lg`}
         >
-          <Link
-            href="/"
-            className="block py-2 px-4 text-lg text-white hover:text-[#5E3BEE] transition duration-300"
-            onClick={handleLinkClick}
-          >
-            Home
-          </Link>
-          <Link
-            href="/joblisting"
-            className="block py-2 px-4 text-lg text-white hover:text-[#5E3BEE] transition duration-300"
-            onClick={handleLinkClick}
-          >
-            Properties
-          </Link>
-          <Link
-            href="/about-me"
-            className="block py-2 px-4 text-lg text-white hover:text-[#5E3BEE] transition duration-300"
-            onClick={handleLinkClick}
-          >
-            About Us
-          </Link>
-          <Link
-            href="/testimonials"
-            className="block py-2 px-4 text-lg text-white hover:text-[#5E3BEE] transition duration-300"
-            onClick={handleLinkClick}
-          >
-            Blog
-          </Link>
-          <div className="px-4">
-            <Link
-              href="/contact"
-              className="block w-full text-lg py-1 px-1 hover:text-[#5E3BEE] transition duration-300 border text-white border-[#5E3BEE] hover:bg-[#1C1E53] rounded"
-              onClick={handleLinkClick}
-            >
-              Contact Us
-            </Link>
-          </div>
+          {["Home", "Properties", "About Us", "Blog", "Contact Us"].map(
+            (item) => (
+              <Link
+                key={item}
+                href={`/${item.toLowerCase().replace(" ", "-")}`}
+                className="block py-2 px-4 text-lg text-white hover:text-[#5E3BEE] transition duration-300"
+                onClick={handleLinkClick}
+              >
+                {item}
+              </Link>
+            )
+          )}
         </div>
       </div>
 
       {/* Centered Text and Image */}
-      <div className="flex flex-col items-center text-center mt-16">
-        <h1 className="text-white text-6xl font-bold tracking-wide">
+      <div className="flex flex-col items-center text-center mt-16 px-4">
+        <h1 className="text-white text-4xl md:text-6xl font-bold tracking-wide">
           Browse Our Properties
         </h1>
-        <div className="w-6/12 p-2 mt-8">
-          <p className="text-white text-2xl tracking-wide">
+        <div className="w-full md:w-6/12 p-2 mt-8">
+          <p className="text-white text-lg md:text-2xl tracking-wide">
             Find your perfect home among our curated properties. Start browsing
             now!
           </p>
         </div>
+      </div>
+      <div className="container mx-auto lg:w-11/12 ">
+        <PropertySearch />
       </div>
     </div>
   );

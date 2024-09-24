@@ -36,12 +36,14 @@ const DropDown = ({ isOpen, onClose }) => {
             Settings
           </div>
         </Link>
-        <div
-          className="block px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer"
-          onClick={handleLogout}
-        >
-          Logout
-        </div>
+        <Link href="/signIn">
+          <div
+            className="block px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer"
+            onClick={handleLogout}
+          >
+            Logout
+          </div>
+        </Link>
       </div>
     </div>
   );

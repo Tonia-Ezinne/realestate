@@ -15,7 +15,7 @@ body{
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  height: 50vh;
+  height: 800px;
   
   
 
@@ -27,6 +27,6 @@ body{
 @media (min-width: 1024px){
   .hero{
     min-height: 446px;
-    max-height: 448px;
+    max-height: 708px;
   }
 }
