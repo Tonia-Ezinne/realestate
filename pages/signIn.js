@@ -51,7 +51,6 @@ export default function SignIn() {
   return (
     <div className="flex flex-col lg:flex-row h-screen">
       <div className="flex flex-col justify-center p-8 w-full lg:w-6/12">
-      
         <div className="flex justify-center lg:hidden items-center gap-2">
           <div className="w-[35px] h-[35px] flex justify-center items-center rounded-full bg-[#4BA586]">
             <Image src="/bh.svg" width={25} height={25} alt="logo" />
@@ -153,8 +152,10 @@ export default function SignIn() {
       </div>
 
       <div className="hidden lg:flex lg:w-6/12 justify-center items-center">
-        <img
+        <Image
           src="/13625 1.svg"
+          width={10}
+          height={10}
           alt="house"
           className="w-full h-full object-cover"
         />
