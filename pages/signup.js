@@ -66,7 +66,7 @@ export default function SignUp() {
 
   return (
     <div className="flex flex-col lg:flex-row ">
-      <div className="flex flex-col justify-center w-full lg:w-6/12 p-8">
+      <div className="flex flex-col justify-center w-full lg:w-6/12  p-8">
         <div className="lg:hidden flex justify-center items-center gap-2 mb-6">
           <div className="w-[35px] h-[35px] flex justify-center items-center rounded-full bg-[#4BA586]">
             <Image src="/BH.svg" width={25} height={25} alt="logo" />
@@ -74,7 +74,7 @@ export default function SignUp() {
           <h1 className="text-[22px] font-bold">BetaHouse</h1>
         </div>
 
-        <h1 className="font-bold text-[28px] text-center lg:text-left leading-6">
+        <h1 className="font-bold text-[28px]  text-center lg:text-left leading-6">
           Join our community of home seekers and explore the possibilities that
           await.
         </h1>
@@ -194,11 +194,25 @@ export default function SignUp() {
       </div>
 
       <div className="hidden lg:flex lg:w-6/12 justify-center items-center">
-        <Image
-          src="/13625 1.svg" width={10} height={10}
-          alt="house"
-          className="w-full h-full object-cover"
-        />
+        <div className="relative w-full">
+          <Image
+            src="/13625 1.svg"
+            width={10}
+            height={10}
+            alt="house"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute beta flex items-center gap-2 top-20 left-12">
+            {" "}
+            {/* Adjust left value as needed */}
+            <div className="w-12 h-12 flex justify-center items-center rounded-full bg-[#4BA586]">
+              {" "}
+              {/* Set width and height to the same value */}
+              <Image src="/BH.svg" width={24} height={24} alt="logo" />
+            </div>
+            <h1 className="text-3xl font-medium beta text-white">BetaHouse</h1>
+          </div>
+        </div>
       </div>
     </div>
   );

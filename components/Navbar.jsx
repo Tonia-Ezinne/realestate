@@ -34,7 +34,7 @@ const Navbar = () => {
         className="sticky w-11/12 container mx-auto top-0 z-50 py-1 lg:py-2 shadow-lg"
         ref={menuRef}
       >
-        <nav className=" flex flex-col md:flex-row items-center justify-between px-4 lg:px-1">
+        <nav className="flex flex-col md:flex-row items-center justify-between px-4 lg:px-1">
           {/* Logo and Mobile Menu Button Section */}
           <div className="flex items-center justify-between w-full md:w-auto">
             <Link
@@ -82,7 +82,7 @@ const Navbar = () => {
               (item) => (
                 <Link
                   key={item}
-                  href={`/${item.toLowerCase().replace(" ", "-")}`}
+                  href="#" // Change to "#" to prevent navigation
                   className="py-4 px-2 text-white hover:text-[#5E3BEE] transition duration-300 font-semibold md:text-sm lg:text-lg"
                   onClick={handleLinkClick}
                 >
@@ -101,7 +101,7 @@ const Navbar = () => {
               <Image
                 src="/Ellipse 8.svg"
                 width={50}
-                height={50} // Adjusted for a better aspect ratio
+                height={50}
                 alt="profile"
               />
               <h1 className="text-white md:text-sm ml-2">Tonia-Ezinne</h1>
@@ -123,7 +123,7 @@ const Navbar = () => {
             (item) => (
               <Link
                 key={item}
-                href={`/${item.toLowerCase().replace(" ", "-")}`}
+                href="#" // Change to "#" to prevent navigation
                 className="block py-2 px-4 text-lg text-white hover:text-[#5E3BEE] transition duration-300"
                 onClick={handleLinkClick}
               >

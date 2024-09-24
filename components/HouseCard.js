@@ -4,10 +4,10 @@ export default function HouseCard({ house }) {
   return (
     <div
       key={house._id}
-      className="relative xl:px-3 lg:px-8 md: house-card rounded-lg "
-      style={{ width: "370px", height: "415px" }} // Set the dimensions here
+      className="relative xl:px-3 lg:px-9 md:px-4  rounded-lg "
+      style={{ width: "375px", height: "415px" }} // Set the dimensions here
     >
-      <div className="relative w-full h-full">
+      <div className="relative w-full  h-full">
         <Image
           src={house.image}
           alt={house.title}
