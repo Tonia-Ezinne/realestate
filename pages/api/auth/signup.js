@@ -1,6 +1,6 @@
 "user controller"
 import dbConnect from "@/utils/dbConnect"; // Ensure this is the correct path to your MongoDB connection utility
-import User from "../../../../models/users"; // Adjust path as needed
+import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
 export default async function handler(req, res) {
