@@ -3,14 +3,13 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { signIn as nextAuthSignIn } from "next-auth/react";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    name: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     confirmPassword: "",
   });
   const [error, setError] = useState("");
@@ -28,9 +27,9 @@ export default function SignUp() {
     setError("");
     setMessage("");
 
-    const { email, password, name, lastName, confirmPassword } = formData;
+    const { email, password, firstname, lastname, confirmPassword } = formData;
 
-    if (!email || !password || !name || !lastName || !confirmPassword) {
+    if (!email || !password || !firstname || !lastname || !confirmPassword) {
       setError("All fields are required");
       return;
     }
@@ -46,40 +45,32 @@ export default function SignUp() {
     }
 
     try {
-      const { data } = await axios.post("/api/signup", formData);
-      setMessage(data.message);
-      setFormData({
-        email: "",
-        password: "",
-        name: "",
-        lastName: "",
-        confirmPassword: "",
+      const { data } = await axios.post("/api/signup", {
+        firstname,
+        lastname,
+        email,
+        password, // Sending plain password
       });
-      setIsChecked(false);
-      router.push("/login");
+      setMessage(data.message);
+
+      // Redirect to the sign-in page after a successful signup
+      router.push("/signIn");
     } catch (err) {
       setError(
-        err.response?.data?.error || "An error occurred. Please try again."
+        err.response?.data?.message || "An error occurred. Please try again."
       );
     }
   };
 
   return (
-    <div className="flex flex-col lg:flex-row ">
-      <div className="flex flex-col justify-center w-full lg:w-6/12  p-8">
-        <div className="lg:hidden flex justify-center items-center gap-2 mb-6">
-          <div className="w-[35px] h-[35px] flex justify-center items-center rounded-full bg-[#4BA586]">
-            <Image src="/BH.svg" width={25} height={25} alt="logo" />
-          </div>
-          <h1 className="text-[22px] font-bold">BetaHouse</h1>
-        </div>
-
-        <h1 className="font-bold text-[28px]  text-center lg:text-left leading-6">
+    <div className="flex flex-col lg:flex-row">
+      <div className="flex flex-col justify-center w-full lg:w-6/12 p-8">
+        <h1 className="font-bold text-[28px] text-center lg:text-left leading-6">
           Join our community of home seekers and explore the possibilities that
           await.
         </h1>
         <p className="mt-5 text-center lg:text-left">
-          Let&apos;s get started by filling out the information below
+          Let's get started by filling out the information below
         </p>
 
         <form onSubmit={handleSubmit} className="w-full mt-6">
@@ -93,9 +84,9 @@ export default function SignUp() {
               <label className="font-semibold">First Name</label>
               <input
                 type="text"
-                name="name"
+                name="firstname"
                 className="border-[#DEDFE0] border-2 rounded p-3 w-full"
-                value={formData.name}
+                value={formData.firstname}
                 onChange={handleChange}
                 placeholder="Enter your First Name"
                 required
@@ -105,9 +96,9 @@ export default function SignUp() {
               <label className="font-semibold">Last Name</label>
               <input
                 type="text"
-                name="lastName"
+                name="lastname"
                 className="border-[#DEDFE0] border-2 rounded p-3 w-full"
-                value={formData.lastName}
+                value={formData.lastname}
                 onChange={handleChange}
                 placeholder="Enter your Last Name"
                 required
@@ -159,21 +150,12 @@ export default function SignUp() {
             >
               Sign Up
             </button>
-
             <div className="flex gap-5">
               <div className="bg-gradient-to-r from-[white] to-[black] h-[0.5px] w-6/12 mt-3"></div>
               <p>or</p>
               <div className="bg-gradient-to-r from-[black] to-[white] h-[0.5px] w-6/12 mt-3"></div>
             </div>
-
-            <button
-              onClick={() => {
-                nextAuthSignIn("google").then(() => {
-                  router.push("/");
-                });
-              }}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-lg mt-4 border border-black"
-            >
+            <button className="w-full flex items-center justify-center gap-2 py-3 rounded-lg mt-4 border border-black">
               <Image
                 src="/google.svg"
                 width={20}
@@ -193,25 +175,21 @@ export default function SignUp() {
         </div>
       </div>
 
-      <div className="hidden lg:flex lg:w-6/12 justify-center items-center">
-        <div className="relative w-full">
+      <div className="hidden lg:flex lg:w-6/12 justify-start items-start relative">
+        <div className="relative w-full h-full">
           <Image
             src="/13625 1.svg"
-            width={10}
-            height={10}
+            width="10"
+            height="10"
             alt="house"
             className="w-full h-full object-cover"
           />
-          <div className="absolute beta flex items-center gap-2 top-20 left-12">
-            {" "}
-            {/* Adjust left value as needed */}
-            <div className="w-12 h-12 flex justify-center items-center rounded-full bg-[#4BA586]">
-              {" "}
-              {/* Set width and height to the same value */}
-              <Image src="/BH.svg" width={24} height={24} alt="logo" />
-            </div>
-            <h1 className="text-3xl font-medium beta text-white">BetaHouse</h1>
+        </div>
+        <div className="absolute beta flex items-center gap-2 top-20 left-4">
+          <div className="w-12 h-12 flex justify-center items-center rounded-full bg-[#4BA586]">
+            <Image src="/BH.svg" width={24} height={24} alt="logo" />
           </div>
+          <h1 className="text-3xl font-medium beta text-white">BetaHouse</h1>
         </div>
       </div>
     </div>

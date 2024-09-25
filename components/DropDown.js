@@ -28,23 +28,8 @@ const DropDown = ({ isOpen, onClose }) => {
             Dashboard
           </div>
         </Link>
-        <Link href="/signIn">
-          <div
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-            onClick={onClose}
-          >
-            signIn
-          </div>
-        </Link>
-        <Link href="/signup">
-          <div
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-            onClick={onClose}
-          >
-            signup
-          </div>
-        </Link>
-        <Link href="/settings">
+        
+                <Link href="/settings">
           <div
             className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
             onClick={onClose}

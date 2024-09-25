@@ -1,54 +1,40 @@
+// pages/api/auth.js
 import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken"; // For token generation
 
 export default async function handler(req, res) {
-  await dbConnect();
-
   if (req.method === "POST") {
     const { email, password } = req.body;
 
-    // Check for missing fields
-    if (!email || !password) {
-      return res.status(400).json({ error: "Email and password are required" });
-    }
-
     try {
-      // Log the login attempt (sensitive info should not be logged in production)
-      console.log("Login attempt:", { email });
-
-      // Find the user in the database
-      const user = await User.findOne({ email });
+      await dbConnect();
 
       // Check if user exists
+      const user = await User.findOne({ email });
       if (!user) {
-        console.error(`Login attempt with non-existent user: ${email}`);
-        return res.status(401).json({ error: "Invalid credentials" });
+        return res.status(404).json({ error: "User not found" });
       }
 
-      // Compare the password
-      const isMatch = await bcrypt.compare(password, user.password);
-
-      if (!isMatch) {
-        console.error(`Invalid password attempt for user: ${email}`);
-        return res.status(401).json({ error: "Invalid credentials" });
+      // Here, we assume the password is valid for demonstration purposes
+      // In a real scenario, you'd want to validate the password securely
+      if (password !== user.password) {
+        // Replace this with your actual password check
+        return res.status(401).json({ error: "Invalid password" });
       }
 
-      // Generate JWT token
-      const token = jwt.sign(
-        { id: user._id, email: user.email },
-        process.env.JWT_SECRET,
-        { expiresIn: "1h" }
-      );
+      // Generate a token
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "1h",
+      });
 
-      // Return the token
-      return res.status(200).json({ token });
+      res.status(200).json({ token });
     } catch (error) {
-      console.error("Error during login:", error); // Log the error
-      return res.status(500).json({ error: "Internal Server Error" });
+      console.error("Error during sign-in:", error);
+      res.status(500).json({ error: "Internal server error" });
     }
   } else {
-    return res.status(405).json({ error: "Method not allowed" });
+    res.setHeader("Allow", ["POST"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }

@@ -2,28 +2,36 @@ import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
 
 export default async function handler(req, res) {
-  await dbConnect();
-
   if (req.method === "POST") {
-    const { email, password, name } = req.body;
+    const { firstname, lastname, email, password } = req.body;
 
-    // Validate request
-    if (!email || !password || !name) {
-      return res.status(400).json({ error: "All fields are required" });
+    try {
+      await dbConnect();
+
+      // Check if user already exists
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(409).json({ message: "User already exists" });
+      }
+
+      // Create new user
+      const newUser = await User.create({
+        firstname,
+        lastname,
+        email,
+        password, // Storing plain password (not recommended)
+      });
+
+      res.status(201).json({
+        message: "User registered successfully",
+        data: { newUser },
+      });
+    } catch (error) {
+      console.error("Error details:", error);
+      res.status(500).json({ message: "Internal server Error" });
     }
-
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ error: "User already exists" });
-    }
-
-    // Create new user
-    const user = new User({ email, password, name });
-    await user.save();
-
-    return res.status(201).json({ message: "User created successfully" });
   } else {
-    return res.status(405).json({ error: "Method not allowed" });
+    res.setHeader("Allow", ["POST"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
