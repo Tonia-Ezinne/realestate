@@ -1,4 +1,3 @@
-// components/DropDown.js
 import React from "react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
@@ -20,7 +19,7 @@ const DropDown = ({ isOpen, onClose }) => {
       }`}
     >
       <div className="py-1">
-        <Link href="/dashboard">
+        <Link href="/#">
           <div
             className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
             onClick={onClose}
@@ -28,8 +27,7 @@ const DropDown = ({ isOpen, onClose }) => {
             Dashboard
           </div>
         </Link>
-        
-                <Link href="/settings">
+        <Link href="/#">
           <div
             className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
             onClick={onClose}
@@ -37,14 +35,12 @@ const DropDown = ({ isOpen, onClose }) => {
             Settings
           </div>
         </Link>
-        <Link href="/signIn">
-          <div
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer"
-            onClick={handleLogout}
-          >
-            Logout
-          </div>
-        </Link>
+        <div
+          className="block px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer"
+          onClick={handleLogout}
+        >
+          Logout
+        </div>
       </div>
     </div>
   );

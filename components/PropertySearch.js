@@ -16,7 +16,7 @@ const PropertySearch = ({ handleSubmit }) => {
           </div>
 
           <div className="flex flex-col mt-1">
-            <h1 className="font-semibold text-center">PROPERTY TYPE</h1>
+            <h1 className="font-semibold text-center">PROPERTY TITLE</h1>
             <input
               type="text"
               placeholder="Enter property type"

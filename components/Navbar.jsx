@@ -3,17 +3,18 @@ import Link from "next/link";
 import Image from "next/image";
 import DropDown from "@/components/DropDown";
 import PropertySearch from "@/components/PropertySearch";
+import { useSession } from "next-auth/react"; // Import useSession for user session
+import ProfileDropdown from "@/components/ProfileDropdown"; // Import the new ProfileDropdown
 
 const Navbar = () => {
+  const { data: session } = useSession(); // Get user session
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsMenuOpen(false);
-        setIsDropdownOpen(false);
       }
     };
 
@@ -25,7 +26,6 @@ const Navbar = () => {
 
   const handleLinkClick = () => {
     setIsMenuOpen(false);
-    setIsDropdownOpen(false);
   };
 
   return (
@@ -75,7 +75,6 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-
           {/* Desktop Menu */}
           <div className="hidden md:flex flex-grow items-center justify-center space-x-4">
             {["Home", "Properties", "About Us", "Blog", "Contact Us"].map(
@@ -91,26 +90,9 @@ const Navbar = () => {
               )
             )}
           </div>
-
           {/* Profile Section */}
-          <div className="hidden md:block items-center ml-auto relative">
-            <div
-              className="flex items-center cursor-pointer"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
-              <Image
-                src="/Ellipse 8.svg"
-                width={50}
-                height={50}
-                alt="profile"
-              />
-              <h1 className="text-white md:text-sm ml-2">Tonia-Ezinne</h1>
-            </div>
-            <DropDown
-              isOpen={isDropdownOpen}
-              onClose={() => setIsDropdownOpen(false)}
-            />
-          </div>
+          <ProfileDropdown />{" "}
+          {/* Replace the old profile section with the new component */}
         </nav>
 
         {/* Mobile Menu */}
