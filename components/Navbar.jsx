@@ -2,12 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import DropDown from "@/components/DropDown";
-import PropertySearch from "@/components/PropertySearch";
-import { useSession } from "next-auth/react"; // Import useSession for user session
-import ProfileDropdown from "@/components/ProfileDropdown"; // Import the new ProfileDropdown
+import { useSession } from "next-auth/react";
+import ProfileDropdown from "@/components/ProfileDropdown";
 
 const Navbar = () => {
-  const { data: session } = useSession(); // Get user session
+  const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -29,28 +28,26 @@ const Navbar = () => {
   };
 
   return (
-    <div className="h-[300px] relative">
+    <div className="py-4 ">
       <div
         className="sticky w-11/12 container mx-auto top-0 z-50 py-1 lg:py-2 shadow-lg"
         ref={menuRef}
       >
         <nav className="flex flex-col md:flex-row items-center justify-between px-4 lg:px-1">
-          {/* Logo and Mobile Menu Button Section */}
           <div className="flex items-center justify-between w-full md:w-auto">
             <Link
               href="/"
               className="flex items-center py-4 px-2"
               onClick={handleLinkClick}
             >
-              <h1 className="bg-[#4BA586] text-white w-[47.21px] h-[47.21px] rounded-full flex items-center justify-center">
+              <h1 className="bg-[#4BA586] text-white text-center md:text-2xl w-[47.21px] h-[47.21px] rounded-full flex items-center justify-center">
                 BH
               </h1>
-              <h1 className="text-white hover:text-[#5E3BEE] md:text-sm text-lg font-semibold ml-2">
+              <h1 className="text-white hover:text-[#5E3BEE] md:text-xl text-lg font-semibold ml-2">
                 BetaHouse
               </h1>
             </Link>
 
-            {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center ml-auto">
               <button
                 className="outline-none"
@@ -58,7 +55,7 @@ const Navbar = () => {
                 aria-label="Toggle menu"
               >
                 <svg
-                  className="w-6 h-6 text-gray-500 hover:text-gray-900"
+                  className="w-6 h-6 text-white hover:text-gray-300"
                   fill="none"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -75,14 +72,14 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-          {/* Desktop Menu */}
+
           <div className="hidden md:flex flex-grow items-center justify-center space-x-4">
             {["Home", "Properties", "About Us", "Blog", "Contact Us"].map(
               (item) => (
                 <Link
                   key={item}
-                  href="#" // Change to "#" to prevent navigation
-                  className="py-4 px-2 text-white hover:text-[#5E3BEE] transition duration-300 font-semibold md:text-sm lg:text-lg"
+                  href="#"
+                  className="py-4 px-2 text-white hover:text-[#5E3BEE] transition duration-300 font-semibold md:text-lg lg:text-lg"
                   onClick={handleLinkClick}
                 >
                   {item}
@@ -90,9 +87,11 @@ const Navbar = () => {
               )
             )}
           </div>
-          {/* Profile Section */}
-          <ProfileDropdown />{" "}
-          {/* Replace the old profile section with the new component */}
+
+          {/* Profile Section for Desktop Only */}
+          <div className="hidden md:block">
+            <ProfileDropdown />
+          </div>
         </nav>
 
         {/* Mobile Menu */}
@@ -105,32 +104,21 @@ const Navbar = () => {
             (item) => (
               <Link
                 key={item}
-                href="#" // Change to "#" to prevent navigation
-                className="block py-2 px-4 text-lg text-white hover:text-[#5E3BEE] transition duration-300"
+                href="#"
+                className="block py-2 px-4 md:text-lg text-lg text-white hover:text-[#5E3BEE] transition duration-300"
                 onClick={handleLinkClick}
               >
                 {item}
               </Link>
             )
           )}
+          {/* Mobile Profile Section */}
+          <ProfileDropdown /> {/* This will be visible in mobile as well */}
         </div>
       </div>
 
       {/* Centered Text and Image */}
-      <div className="flex flex-col items-center text-center mt-16 px-4">
-        <h1 className="text-white text-4xl md:text-6xl font-bold tracking-wide">
-          Browse Our Properties
-        </h1>
-        <div className="w-full md:w-6/12 p-2 mt-8">
-          <p className="text-white text-lg md:text-2xl tracking-wide">
-            Find your perfect home among our curated properties. Start browsing
-            now!
-          </p>
-        </div>
-      </div>
-      {/* <div className="container mx-auto lg:w-11/12 ">
-        <PropertySearch />
-      </div> */}
+     
     </div>
   );
 };

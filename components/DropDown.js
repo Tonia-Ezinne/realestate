@@ -14,14 +14,14 @@ const DropDown = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className={`absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg ${
+      className={`absolute right-0 md:-right-1 -mt-24 md:mt-2 w-40 md:w-40 lg:w-48 bg-[#e2e0e0] md:bg-white rounded-md shadow-lg ${
         isOpen ? "block" : "hidden"
       }`}
     >
       <div className="py-1">
         <Link href="/#">
           <div
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+            className="block px-4 py-2 text-black font-medium md:text-gray-800 hover:bg-gray-200"
             onClick={onClose}
           >
             Dashboard
@@ -29,7 +29,7 @@ const DropDown = ({ isOpen, onClose }) => {
         </Link>
         <Link href="/#">
           <div
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-200"
+            className="block px-4 py-2 text-black font-medium md:text-gray-800 hover:bg-gray-200"
             onClick={onClose}
           >
             Settings
@@ -39,7 +39,7 @@ const DropDown = ({ isOpen, onClose }) => {
         {/* Conditionally render Logout or Sign Up/Sign In based on session status */}
         {session ? (
           <div
-            className="block px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer"
+            className="block px-4 py-2 text-black font-medium md:text-gray-800 hover:bg-gray-200 cursor-pointer"
             onClick={handleLogout}
           >
             Logout
@@ -48,7 +48,7 @@ const DropDown = ({ isOpen, onClose }) => {
           <>
             <Link href="/signIn">
               <div
-                className="block px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer"
+                className="block px-4 py-2 text-black font-medium md:text-gray-800 hover:bg-gray-200 cursor-pointer"
                 onClick={onClose}
               >
                 Sign In
@@ -56,7 +56,7 @@ const DropDown = ({ isOpen, onClose }) => {
             </Link>
             <Link href="/signup">
               <div
-                className="block px-4 py-2 text-gray-800 hover:bg-gray-200 cursor-pointer"
+                className="block px-4 py-2 text-black font-medium md:text-gray-800 hover:bg-gray-200 cursor-pointer"
                 onClick={onClose}
               >
                 Sign Up
