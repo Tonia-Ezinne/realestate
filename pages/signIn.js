@@ -149,15 +149,17 @@ export default function SignIn() {
       </div>
 
       <div className="hidden lg:flex lg:w-6/12 justify-start items-start relative">
-        <div className="relative w-full h-full">
-          <Image
-            src="/13625 1.svg"
-            width="10"
-            height="10"
-            alt="house"
-            className="w-full h-full object-cover"
-          />
-        </div>
+        <link href="/">
+          <div className="relative w-full h-full">
+            <Image
+              src="/13625 1.svg"
+              width="10"
+              height="10"
+              alt="house"
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </link>
         <div className="absolute beta flex items-center gap-2 top-20 left-4">
           <div className="w-12 h-12 flex justify-center items-center rounded-full bg-[#4BA586]">
             <Image src="/BH.svg" width={24} height={24} alt="logo" />
