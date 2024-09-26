@@ -4,91 +4,26 @@ import dbConnect from "@/utils/dbConnect";
 export default async function handler(req, res) {
   await dbConnect();
 
-  // Handle POST request to create a new house
-  if (req.method === "POST") {
+  if (req.method === "GET") {
     try {
-      const {
-        title,
-        price,
-        location,
-        image,
-        popular,
-        bedrooms,
-        bathrooms,
-        status,
-      } = req.body;
-
-      // Validate required fields
-      if (
-        !title ||
-        !price ||
-        !location ||
-        !image ||
-        !bedrooms ||
-        !bathrooms ||
-        !status
-      ) {
-        return res.status(400).json({ error: "All fields are required" });
-      }
-
-      const newHouse = new House({
-        title,
-        price,
-        location,
-        image,
-        popular: popular || false,
-        bedrooms,
-        bathrooms,
-        status,
-      });
-
-      await newHouse.save();
-      return res
-        .status(201)
-        .json({ message: "House created successfully", house: newHouse });
-    } catch (error) {
-      console.error("Error creating house:", error);
-      return res.status(500).json({ error: "Internal Server Error" });
-    }
-  }
-
-  // Handle GET request to fetch houses
-  else if (req.method === "GET") {
-    try {
-      const {
-        page = 1,
-        sort,
-        status,
-        location,
-        title, // Added title to query parameters
-        bedrooms,
-      } = req.query;
+      const { page = 1, location, status, bedrooms } = req.query; // Updated to include status
       const pageSize = 9;
       const skip = (page - 1) * pageSize;
 
       let query = {};
-
-      if (status) {
-        query.status = status;
-      }
       if (location) {
-        query.location = { $regex: location, $options: "i" };
+        query.location = { $regex: location, $options: "i" }; // Case-insensitive search
       }
-      if (title) {
-        query.title = { $regex: title, $options: "i" }; // Search by title
+      if (status) {
+        query.status = status; // Filter by property status
       }
       if (bedrooms) {
-        query.bedrooms = parseInt(bedrooms, 10);
+        query.bedrooms = parseInt(bedrooms, 10); // Filter by number of bedrooms
       }
-
-      const sortOptions = {};
-      if (sort === "price-asc") sortOptions.price = 1;
-      if (sort === "price-desc") sortOptions.price = -1;
 
       const houses = await House.find(query)
         .skip(skip)
-        .limit(pageSize)
-        .sort(sortOptions);
+        .limit(pageSize);
 
       const totalHouses = await House.countDocuments(query);
       const totalPages = Math.ceil(totalHouses / pageSize);

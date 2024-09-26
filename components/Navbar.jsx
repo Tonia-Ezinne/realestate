@@ -29,7 +29,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="hero h-[1000px] relative">
+    <div className="h-[300px] relative">
       <div
         className="sticky w-11/12 container mx-auto top-0 z-50 py-1 lg:py-2 shadow-lg"
         ref={menuRef}
@@ -128,9 +128,9 @@ const Navbar = () => {
           </p>
         </div>
       </div>
-      <div className="container mx-auto lg:w-11/12 ">
+      {/* <div className="container mx-auto lg:w-11/12 ">
         <PropertySearch />
-      </div>
+      </div> */}
     </div>
   );
 };

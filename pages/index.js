@@ -1,12 +1,15 @@
 import AvailableHouses from "@/components/AvailableHouses";
+import Footer from "@/components/Footer";
 import PopularHousesCarousel from "@/components/PopularHousesCarousel";
+import PropertySearch from "@/components/PropertySearch";
 import { getSession } from "next-auth/react";
 
 export default function Home() {
   return (
     <div>
-      <AvailableHouses />
+      <PropertySearch/>
       <PopularHousesCarousel />
+      <Footer/>
     </div>
   );
 }
