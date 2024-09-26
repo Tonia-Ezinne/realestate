@@ -1,5 +1,3 @@
-// pages/api/auth/[...nextauth].js
-
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -20,32 +18,18 @@ export default NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      // Store user ID in the token if the user object is present
       if (user) {
-        token.id = user.id; // Ensure your user object has an id
+        token.id = user.id; // Assuming you want to store user ID in the token
       }
       return token;
     },
     async session({ session, token }) {
-      // Attach user ID to session
-      if (token.id) {
-        session.user.id = token.id;
-      }
+      session.user.id = token.id; // Attach user ID to session
       return session;
     },
     async redirect({ url, baseUrl }) {
-      // Redirect to the base URL after successful authentication
-      return baseUrl; // Modify if you have a specific route to redirect to
-    },
-  },
-  events: {
-    async signIn(message) {
-      // Optional: Add custom behavior on sign-in
-      console.log("User signed in:", message);
-    },
-    async signOut(message) {
-      // Optional: Add custom behavior on sign-out
-      console.log("User signed out:", message);
+      // Redirect to home page after successful authentication
+      return baseUrl; // or '/'; depending on your needs
     },
   },
 });
