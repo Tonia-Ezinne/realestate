@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+"use client";
+
+import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -34,7 +36,7 @@ export default function SignIn() {
       storageMethod.setItem("token", data.token);
 
       setMessage("Login successful");
-      router.replace("/"); // Redirect to homepage after login
+      router.push("/"); // Redirect to homepage after login
     } catch (err) {
       setError(err.response?.data?.error || "Login failed");
       console.error(
@@ -49,13 +51,22 @@ export default function SignIn() {
   return (
     <div className="flex flex-col lg:flex-row h-screen">
       <div className="flex-grow flex items-center justify-center">
-        <form onSubmit={handleSubmit} className="w-full px-20 p-5 bg-white">
-          {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+        <form onSubmit={handleSubmit} className="w-full lg:px-24 md:px-20 p-5 bg-white">
+          {error && <p className="text-red-500 text-center">{error}</p>}
           {message && (
             <p className="text-green-500 mt-4 text-center">{message}</p>
           )}
 
-          <div className="flex flex-col gap-1 w-full mt-6">
+          <Link href="/" className="lg:hidden flex items-center py-4 px-2">
+            <h1 className="bg-[#4BA586] text-white md:text-2xl text-xl font-semibold w-[50.21px] h-[50.21px] rounded-full flex items-center justify-center">
+              BH
+            </h1>
+            <h1 className="text-black hover:text-[#5E3BEE] md:text-3xl text-2xl font-semibold ml-2">
+              BetaHouse
+            </h1>
+          </Link>
+
+          <div className="flex flex-col gap-1 w-full mt-8">
             <label className="font-semibold">Email</label>
             <input
               type="email"
@@ -139,23 +150,24 @@ export default function SignIn() {
       </div>
 
       <div className="hidden lg:flex lg:w-6/12 justify-start items-start relative">
-        <Link href="/">
-          <div className="relative w-full h-full">
-            <Image
-              src="/13625 1.svg"
-              width="10"
-              height="10"
-              alt="house"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </Link>
-        <div className="absolute beta flex items-center gap-2 top-20 left-4">
+        <div className="relative w-full h-full">
+          <Image
+            src="/13625 1.svg"
+            width="10"
+            height="10"
+            alt="house"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <Link
+          href="/"
+          className="absolute beta flex items-center gap-2 top-20 left-4"
+        >
           <div className="w-12 h-12 flex justify-center items-center rounded-full bg-[#4BA586]">
             <Image src="/BH.svg" width={24} height={24} alt="logo" />
           </div>
           <h1 className="text-3xl font-medium beta text-white">BetaHouse</h1>
-        </div>
+        </Link>
       </div>
     </div>
   );

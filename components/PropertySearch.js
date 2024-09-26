@@ -7,18 +7,17 @@ const PropertySearch = () => {
   const [location, setLocation] = useState("");
   const [title, setTitle] = useState("");
   const [bedrooms, setBedrooms] = useState(0);
+  const [searchParams, setSearchParams] = useState({});
 
   const handleSearch = (e) => {
-    e.preventDefault();
-    // Trigger search in AvailableHouses component
+    e.preventDefault(); // Prevent default form submission behavior
+    setSearchParams({ location, title, bedrooms });
   };
 
   return (
     <>
       <div className="hero">
-        <div>
-          <Navbar />
-        </div>
+        <Navbar />
         <div className="bg-[#FFFFFF33] mt-16 py-4 container mx-auto px-2 sm:px-4 lg:px-8">
           <form onSubmit={handleSearch}>
             <div className="flex flex-col lg:flex-row w-full">
@@ -98,9 +97,9 @@ const PropertySearch = () => {
 
       <div>
         <AvailableHouses
-          location={location}
-          title={title}
-          bedrooms={bedrooms}
+          location={searchParams.location}
+          title={searchParams.title}
+          bedrooms={searchParams.bedrooms}
         />
       </div>
     </>

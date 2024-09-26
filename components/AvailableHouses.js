@@ -65,6 +65,10 @@ export default function AvailableHouses() {
     setCurrentPage(pageNumber);
   };
 
+  
+
+
+
   return (
     <div className="available-houses container mx-auto w-11/12 mt-20">
       <div

@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
@@ -65,11 +67,19 @@ export default function SignUp() {
   return (
     <div className="flex flex-col lg:flex-row">
       <div className="flex flex-col justify-center w-full lg:w-6/12 p-8">
-        <h1 className="font-bold text-[28px] text-center lg:text-left leading-6">
+        <Link href="/" className="lg:hidden  flex items-center py-4 px-2">
+          <h1 className="bg-[#4BA586] text-white  md:text-2xl text-xl  font-semibold w-[50.21px] h-[50.21px] rounded-full flex items-center justify-center">
+            BH
+          </h1>
+          <h1 className="text-black hover:text-[#5E3BEE] md:text-3xl text-2xl font-semibold ml-2">
+            BetaHouse
+          </h1>
+        </Link>
+        <h1 className="font-bold text-[28px] text-center lg:text-left leading-6 mt-10 lg:mt-0">
           Join our community of home seekers and explore the possibilities that
           await.
         </h1>
-        <p className="mt-5 text-center lg:text-left">
+        <p className="mt-5 text-center md:text-xl lg:text-left">
           Let&apos;s get started by filling out the information below
         </p>
 
