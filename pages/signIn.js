@@ -12,7 +12,6 @@ export default function SignIn() {
   const [message, setMessage] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [loginSuccess, setLoginSuccess] = useState(false); // State to track login success
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -31,14 +30,11 @@ export default function SignIn() {
       const { data } = await axios.post("/api/auth", { email, password });
 
       // Save token based on the checkbox
-      if (isChecked) {
-        localStorage.setItem("token", data.token);
-      } else {
-        sessionStorage.setItem("token", data.token);
-      }
+      const storageMethod = isChecked ? localStorage : sessionStorage;
+      storageMethod.setItem("token", data.token);
 
       setMessage("Login successful");
-      setLoginSuccess(true); // Set login success state
+      router.replace("/"); // Redirect to homepage after login
     } catch (err) {
       setError(err.response?.data?.error || "Login failed");
       console.error(
@@ -46,16 +42,9 @@ export default function SignIn() {
         err.response ? err.response.data : err.message
       );
     } finally {
-      setLoading(false); // Ensure loading is reset
+      setLoading(false);
     }
   };
-
-  // Redirect to homepage if login is successful
-  useEffect(() => {
-    if (loginSuccess) {
-      router.replace("/"); // Use router.replace for redirection
-    }
-  }, [loginSuccess]); // Dependency array includes loginSuccess
 
   return (
     <div className="flex flex-col lg:flex-row h-screen">
@@ -116,6 +105,7 @@ export default function SignIn() {
             >
               {loading ? "Signing in..." : "Sign In"}
             </button>
+
             <div className="flex gap-5">
               <div className="bg-gradient-to-r from-[white] to-[black] h-[0.5px] w-6/12 mt-3"></div>
               <p>or</p>
@@ -149,7 +139,7 @@ export default function SignIn() {
       </div>
 
       <div className="hidden lg:flex lg:w-6/12 justify-start items-start relative">
-        <link href="/">
+        <Link href="/">
           <div className="relative w-full h-full">
             <Image
               src="/13625 1.svg"
@@ -159,7 +149,7 @@ export default function SignIn() {
               className="w-full h-full object-cover"
             />
           </div>
-        </link>
+        </Link>
         <div className="absolute beta flex items-center gap-2 top-20 left-4">
           <div className="w-12 h-12 flex justify-center items-center rounded-full bg-[#4BA586]">
             <Image src="/BH.svg" width={24} height={24} alt="logo" />
