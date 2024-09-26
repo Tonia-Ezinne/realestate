@@ -4,7 +4,7 @@ import DropDown from "@/components/DropDown";
 import { useSession } from "next-auth/react";
 
 const ProfileDropdown = () => {
-  const { data: session } = useSession();
+  const { data: session } = useSession(); // Get session data
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
@@ -14,13 +14,14 @@ const ProfileDropdown = () => {
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
         <Image
-          src={session?.user?.image || "/default-profile.png"}
+          src={session?.user?.image || "/pro.jpg"} // Use default image for guests
           width={50}
           height={50}
           alt="profile"
         />
         <h1 className="text-white md:text-sm ml-2">
-          {session?.user?.name || "Guest"}
+          {session?.user?.name || "Guest"}{" "}
+          {/* Display "Guest" if not logged in */}
         </h1>
         {/* Dropdown Icon */}
         <Image
